@@ -16,6 +16,27 @@ export const newUserRegistration = async (body) => {
   return data;
 };
 
+//login user
+export const loginUser = async (body) => {
+  let email = body.email;
+  let data = await User.find({ email: email });
+  console.log(data.password);
+  console.log(data);
+  if (data.length !== 0) {
+    let passwordvalidator = await bcrypt.compare(body.password, data[0].password);
+    if (passwordvalidator) {
+      return data;
+    } else {
+      throw new Error('Password Is incorrect.....');
+    }
+
+  } else {
+    throw new Error('Email Is incorrect.....');
+
+  }
+
+};
+
 //update single user
 export const updateUser = async (_id, body) => {
   const data = await User.findByIdAndUpdate(

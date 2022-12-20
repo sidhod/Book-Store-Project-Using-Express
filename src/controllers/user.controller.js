@@ -57,6 +57,24 @@ export const newUserRegistration = async (req, res, next) => {
     next(error);
   }
 };
+/**
+ * Controller to create a new user
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const loginUser = async (req, res, next) => {
+  try {
+    const data = await UserService.loginUser(req.body);
+
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 /**
  * Controller to update a user
