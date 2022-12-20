@@ -1,4 +1,5 @@
 import User from '../models/user.model';
+import bcrypt from 'bcrypt'
 
 //get all users
 export const getAllUsers = async () => {
@@ -7,7 +8,10 @@ export const getAllUsers = async () => {
 };
 
 //create new user
-export const newUser = async (body) => {
+export const newUserRegistration = async (body) => {
+  const saltRounds = 10;
+  const hash = bcrypt.hashSync(body.password, saltRounds);
+  body.password = hash;
   const data = await User.create(body);
   return data;
 };

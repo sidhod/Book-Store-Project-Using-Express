@@ -9,6 +9,6 @@ const router = express.Router();
 router.get('', userController.getAllUsers);
 
 //route to create a new user
-router.post('/registration', newUserValidator, userController.newUser);
+router.post('/registration', newUserValidator, userController.newUserRegistration);
 
 export default router;
