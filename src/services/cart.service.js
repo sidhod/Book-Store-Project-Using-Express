@@ -68,3 +68,122 @@ export const addToCart = async (body, _id) => {
         throw new Error("Slot of Book is not found!!!")
     }
 };
+
+//remove book from cart
+export const removeBookFromCart = async (body, _id) => {
+    // console.log("id===>" + body)
+    // const findBook = await Book.findOne({ _id: _id });
+    let bookMatchFound = false;
+    // if (findBook != null) {
+    const findCart = await Cart.findOne({ userId: body.userId });
+    if (findCart != null) {
+        console.log("find===>" + findCart + _id)
+        findCart.books.forEach(object => {
+            if (object.productId == _id) {
+                findCart.books.splice(findCart.books.indexOf(object), 1);
+                bookMatchFound = true;
+            }
+        });
+        if (bookMatchFound == true) {
+            const removeBookFromCart = await Cart.findOneAndUpdate(
+                {
+                    _id: findCart._id
+                },
+                { books: findCart.books },
+                {
+                    new: true
+                }
+            );
+            return removeBookFromCart;
+        }
+        else {
+            throw new Error("Book does not exist in cart")
+        }
+    }
+    else {
+        throw new Error("Cart does not exist!!!")
+    }
+    // }
+    // // else {
+    // //     throw new Error("Book not found!!!")
+    // // }
+};
+
+
+//increase quntity of book
+export const increaseBook = async (body, _id) => {
+    let bookMatchFound = false;
+    const findCart = await Cart.findOne({ userId: body.userId });
+    if (findCart != null) {
+        findCart.books.forEach(object => {
+            if (object.productId == _id) {
+                object.quantity += 1;
+                bookMatchFound = true;
+            }
+        });
+        if (bookMatchFound == true) {
+            const increaseQuantity = await Cart.findOneAndUpdate(
+                {
+                    _id: findCart._id
+                },
+                { books: findCart.books },
+                {
+                    new: true
+                }
+            );
+            return increaseQuantity;
+
+        }
+        else {
+            throw new Error("Book does not exist in cart")
+        }
+    }
+    else {
+        throw new Error("Cart does not exist!!!")
+    }
+};
+
+
+// decrease quntity of book
+export const decreaseBook = async (body, _id) => {
+
+    let bookMatchFound = false;
+    const findCart = await Cart.findOne({ userId: body.userId });
+    console.log(findCart)
+    if (findCart != null) {
+        console.log(_id)
+        findCart.books.forEach(object => {
+
+            if (object.productId == _id) {
+                if (object.quantity <= 1) {
+                    findCart.books.splice(findCart.books.indexOf(object), 1);
+
+                } else {
+                    object.quantity -= 1;
+                }
+                bookMatchFound = true;
+            }
+        });
+        if (bookMatchFound == true) {
+            const increaseQuantity = await Cart.findOneAndUpdate(
+                {
+                    _id: findCart._id
+                },
+                { books: findCart.books },
+                {
+                    new: true
+                }
+            );
+            return increaseQuantity;
+
+        }
+        else {
+            throw new Error("Book does not exist in cart")
+        }
+    }
+    else {
+        throw new Error("Cart does not exist!!!")
+    }
+};
+
+
