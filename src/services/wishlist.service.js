@@ -6,6 +6,7 @@ export const getAllBooks = async () => {
     return data;
 };
 
+//add Book In wishlist
 export const addTowishList = async (body, _id) => {
     const findBook = await Book.findOne({ _id: _id });
     let bookMatchFound = false;
@@ -56,12 +57,12 @@ export const addTowishList = async (body, _id) => {
     }
 };
 
+
 //remove book from wish list
 export const removeBookFromWishList = async (body, _id) => {
     let bookMatchFound = false;
     const findInWishList = await WishList.findOne({ userId: body.userId });
     if (findInWishList != null) {
-        console.log("find===>" + findInWishList + _id)
         findInWishList.books.forEach(object => {
             if (object.productId == _id) {
                 findInWishList.books.splice(findInWishList.books.indexOf(object), 1);
