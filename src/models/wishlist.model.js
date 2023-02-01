@@ -27,7 +27,10 @@ const wishListSchema = new Schema(
             },
             price: {
                 type: Number
-            }
+            },
+            discountPrice: {
+                type: Number
+            },
         }],
         cart_total: {
             type: Number

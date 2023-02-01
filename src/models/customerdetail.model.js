@@ -23,18 +23,9 @@ const customerDetailsSchema = new Schema(
             city: {
                 type: String,
             },
-            landmark: {
-                type: String
-            },
             state: {
                 type: String,
             },
-            pinCode: {
-                type: String
-            },
-            locality: {
-                type: String
-            }
         }]
     }
 );

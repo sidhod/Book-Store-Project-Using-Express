@@ -1,12 +1,8 @@
 import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema(
+const orderSchema = new Schema(
   {
     firstName: {
-      type: String
-
-    },
-    lastName: {
       type: String
 
     },
@@ -19,11 +15,15 @@ const userSchema = new Schema(
       type: String,
       required: true
 
-    }
+    },
+    mobileNumber: {
+      type: Number
+
+    },
   },
   {
     timestamps: true
   }
 );
 
-export default model('User', userSchema);
+export default model('User', orderSchema);

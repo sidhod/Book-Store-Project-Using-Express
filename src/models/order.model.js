@@ -1,6 +1,7 @@
-
 import { Schema, model } from 'mongoose';
-const cartSchema = new Schema(
+
+const userSchema = new Schema(
+
     {
         userId: {
             type: String
@@ -23,7 +24,6 @@ const cartSchema = new Schema(
             },
             quantity: {
                 type: Number,
-                default: 1
             },
             price: {
                 type: Number
@@ -31,15 +31,12 @@ const cartSchema = new Schema(
             discountPrice: {
                 type: Number
             },
+            // date: {
+            //     type: String
+            // }
         }],
-        cart_total: {
-            type: Number
-        },
-        isPurchased: {
-            type: Boolean,
-            default: false
-        }
     }
+
 );
 
-export default model('Cart', cartSchema);
+export default model('Order', userSchema);

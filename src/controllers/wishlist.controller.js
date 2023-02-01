@@ -13,7 +13,7 @@ export const getAllBooks = async (req, res, next) => {
         res.status(HttpStatus.OK).json({
             code: HttpStatus.OK,
             data: data,
-            message: 'All books fetched successfully'
+            message: 'All books in wishlist'
         });
     } catch (error) {
         next(error);

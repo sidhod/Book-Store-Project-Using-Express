@@ -1,10 +1,28 @@
 import Cart from '../models/cart.model';
 import Book from '../models/books.model'
+import object from '@hapi/joi/lib/types/object';
 //get all books
 export const getAllBooks = async () => {
     const data = await Cart.find();
     return data;
 };
+
+export const getBookById = async (body, _id) => {
+
+    const findCart = await Cart.findOne({ userId: body.userId });
+    var arr
+    if (findCart != null) {
+        console.log("find===>" + findCart + _id)
+        findCart.books.forEach(object => {
+            if (object.productId == _id) {
+                arr = findCart.books.slice(findCart.books.indexOf(object), 1);
+            }
+        });
+        return arr
+    } else {
+        throw new Error("slot is negative")
+    }
+}
 
 export const addToCart = async (body, _id) => {
     const findBook = await Book.findOne({ _id: _id });
@@ -15,57 +33,55 @@ export const addToCart = async (body, _id) => {
         bookName: findBook.bookName,
         bookImage: findBook.bookImage,
         author: findBook.author,
-        price: findBook.price
+        price: findBook.price,
+        discountPrice: findBook.discountPrice
     };
     if (findBook != null) {
-        if (findBook.quantity >= 1) {
-            const findCart = await Cart.findOne({ userId: body.userId });
-            console.log(findCart);
-            if (findCart == null) {
-                const createNewCart = await Cart.create({ userId: body.userId, books: [updateBookDetails] });
-                return createNewCart;
+        const findCart = await Cart.findOne({ userId: body.userId });
+        console.log(findCart);
+        if (findCart == null) {
+            const createNewCart = await Cart.create({ userId: body.userId, books: [updateBookDetails] });
+            return createNewCart
+        } else {
+            findCart.books.forEach(object => {
+                console.log("pass====>" + _id)
+                console.log('product id==>' + object.productId)
+                if (object.productId == _id) {
 
-            } else {
-                findCart.books.forEach(object => {
-                    console.log("pass====>" + _id)
-                    console.log('product id==>' + object.productId)
-                    if (object.productId == _id) {
-
-                        object.quantity += 1;
-                        bookMatchFound = true;
+                    object.quantity += 1;
+                    bookMatchFound = true;
+                }
+            });
+            if (bookMatchFound == true) {
+                const addToCart = await Cart.findOneAndUpdate(
+                    {
+                        _id: findCart._id
+                    },
+                    { books: findCart.books },
+                    {
+                        new: true
                     }
-                });
-                if (bookMatchFound == true) {
-                    const addToCart = await Cart.findOneAndUpdate(
-                        {
-                            _id: findCart._id
-                        },
-                        { books: findCart.books },
-                        {
-                            new: true
-                        }
-                    );
-                    return addToCart;
-                }
-                else {
-                    const addBookInCart = await Cart.findOneAndUpdate(
-                        {
-                            _id: findCart._id
-                        },
-                        { $push: { books: [updateBookDetails] } },
-                        {
-                            new: true
-                        }
-                    );
-                    return addBookInCart;
-                }
+                );
+                console.log(addToCart.books.length - 1);
+                return addToCart.books[addToCart.books.length - 1]
+            }
+            else {
+                const addBookInCart = await Cart.findOneAndUpdate(
+                    {
+                        _id: findCart._id
+                    },
+                    { $push: { books: [updateBookDetails] } },
+                    {
+                        new: true
+                    }
+                );
+                console.log(addBookInCart.books.length - 1);
+                return addBookInCart.books;
 
             }
-        } else {
-            throw new Error("slot is negative")
         }
     } else {
-        throw new Error("Slot of Book is not found!!!")
+        throw new Error("slot is negative")
     }
 };
 

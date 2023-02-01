@@ -16,7 +16,8 @@ export const addTowishList = async (body, _id) => {
         bookName: findBook.bookName,
         bookImage: findBook.bookImage,
         author: findBook.author,
-        price: findBook.price
+        price: findBook.price,
+        discountPrice: findBook.discountPrice
     };
     if (findBook != null) {
         if (findBook.quantity >= 1) {
@@ -60,6 +61,7 @@ export const addTowishList = async (body, _id) => {
 
 //remove book from wish list
 export const removeBookFromWishList = async (body, _id) => {
+
     let bookMatchFound = false;
     const findInWishList = await WishList.findOne({ userId: body.userId });
     if (findInWishList != null) {
