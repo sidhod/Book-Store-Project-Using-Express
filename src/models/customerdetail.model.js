@@ -27,6 +27,9 @@ const customerDetailsSchema = new Schema(
                 type: String,
             },
         }]
+    },
+    {
+        timestamps: true
     }
 );
 

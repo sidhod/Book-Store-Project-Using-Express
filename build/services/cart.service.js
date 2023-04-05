@@ -93,7 +93,8 @@ var addToCart = /*#__PURE__*/function () {
               bookName: findBook.bookName,
               bookImage: findBook.bookImage,
               author: findBook.author,
-              price: findBook.price
+              price: findBook.price,
+              discountPrice: findBook.discountPrice
             };
             if (!(findBook != null)) {
               _context3.next = 33;
@@ -117,7 +118,7 @@ var addToCart = /*#__PURE__*/function () {
             });
           case 13:
             createNewCart = _context3.sent;
-            return _context3.abrupt("return", createNewCart.books[createNewCart.books.length - 1]);
+            return _context3.abrupt("return", createNewCart);
           case 17:
             findCart.books.forEach(function (object) {
               console.log("pass====>" + _id);
@@ -157,7 +158,7 @@ var addToCart = /*#__PURE__*/function () {
           case 28:
             addBookInCart = _context3.sent;
             console.log(addBookInCart.books.length - 1);
-            return _context3.abrupt("return", addBookInCart);
+            return _context3.abrupt("return", addBookInCart.books);
           case 31:
             _context3.next = 34;
             break;

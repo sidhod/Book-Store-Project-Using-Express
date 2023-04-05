@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _mongoose = require("mongoose");
-var cartSchema = new _mongoose.Schema({
+var userSchema = new _mongoose.Schema({
   userId: {
     type: String
   },
@@ -26,8 +26,7 @@ var cartSchema = new _mongoose.Schema({
       type: String
     },
     quantity: {
-      type: Number,
-      "default": 1
+      type: Number
     },
     price: {
       type: Number
@@ -35,16 +34,12 @@ var cartSchema = new _mongoose.Schema({
     discountPrice: {
       type: Number
     }
-  }],
-  cart_total: {
-    type: Number
-  },
-  isPurchased: {
-    type: Boolean,
-    "default": false
-  }
+    // date: {
+    //     type: String
+    // }
+  }]
 }, {
   timestamps: true
 });
-var _default = (0, _mongoose.model)('Cart', cartSchema);
+var _default = (0, _mongoose.model)('Order', userSchema);
 exports["default"] = _default;

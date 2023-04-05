@@ -28,6 +28,8 @@ var userSchema = new _mongoose.Schema({
   price: {
     type: Number
   }
+}, {
+  timestamps: true
 });
 var _default = (0, _mongoose.model)('Book', userSchema, 'Books');
 exports["default"] = _default;

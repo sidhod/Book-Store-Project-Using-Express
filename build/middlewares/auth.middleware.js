@@ -4,7 +4,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.wishListAuth = exports.userCartAuth = exports.userAuth = void 0;
+exports.wishListAuth = exports.userCartAuth = exports.userAuth = exports.OrderAuth = void 0;
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
@@ -171,4 +171,59 @@ var wishListAuth = /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }();
+
+/**
+ * Middleware to authenticate if user has a valid Authorization token
+ * Authorization: Bearer <token>
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ */
 exports.wishListAuth = wishListAuth;
+var OrderAuth = /*#__PURE__*/function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
+    var bearerToken, user;
+    return _regenerator["default"].wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            bearerToken = req.header('Authorization');
+            if (bearerToken) {
+              _context4.next = 4;
+              break;
+            }
+            throw {
+              code: _httpStatusCodes["default"].BAD_REQUEST,
+              message: 'Authorization token is required'
+            };
+          case 4:
+            bearerToken = bearerToken.split(' ')[1];
+            _context4.next = 7;
+            return _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY);
+          case 7:
+            user = _context4.sent;
+            req.body.userId = user.email;
+            next();
+            _context4.next = 15;
+            break;
+          case 12:
+            _context4.prev = 12;
+            _context4.t0 = _context4["catch"](0);
+            res.status(_httpStatusCodes["default"].BAD_REQUEST).json({
+              code: _httpStatusCodes["default"].BAD_REQUEST,
+              message: "".concat(_context4.t0)
+            });
+          case 15:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[0, 12]]);
+  }));
+  return function OrderAuth(_x10, _x11, _x12) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+exports.OrderAuth = OrderAuth;

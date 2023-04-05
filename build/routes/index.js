@@ -11,6 +11,7 @@ var _books = _interopRequireDefault(require("./books.route"));
 var _cart = _interopRequireDefault(require("./cart.route"));
 var _wishlist = _interopRequireDefault(require("./wishlist.route"));
 var _customerdetail = _interopRequireDefault(require("./customerdetail.route"));
+var _order = _interopRequireDefault(require("./order.route"));
 var router = _express["default"].Router();
 /**
  * Function contains Application routes
@@ -26,6 +27,7 @@ var routes = function routes() {
   router.use('/cart', _cart["default"]);
   router.use('/wishlist', _wishlist["default"]);
   router.use('/customerdetails', _customerdetail["default"]);
+  router.use('/order', _order["default"]);
   return router;
 };
 var _default = routes;

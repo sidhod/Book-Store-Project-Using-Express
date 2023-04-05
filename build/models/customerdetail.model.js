@@ -25,19 +25,12 @@ var customerDetailsSchema = new _mongoose.Schema({
     city: {
       type: String
     },
-    landmark: {
-      type: String
-    },
     state: {
-      type: String
-    },
-    pinCode: {
-      type: String
-    },
-    locality: {
       type: String
     }
   }]
+}, {
+  timestamps: true
 });
 var _default = (0, _mongoose.model)('CustomerDetails', customerDetailsSchema);
 exports["default"] = _default;

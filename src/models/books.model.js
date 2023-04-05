@@ -25,6 +25,9 @@ const userSchema = new Schema(
         price: {
             type: Number
         },
+    },
+    {
+        timestamps: true
     }
 
 );

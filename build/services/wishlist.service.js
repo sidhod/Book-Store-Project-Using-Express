@@ -56,7 +56,8 @@ var addTowishList = /*#__PURE__*/function () {
               bookName: findBook.bookName,
               bookImage: findBook.bookImage,
               author: findBook.author,
-              price: findBook.price
+              price: findBook.price,
+              discountPrice: findBook.discountPrice
             };
             if (!(findBook != null)) {
               _context2.next = 29;

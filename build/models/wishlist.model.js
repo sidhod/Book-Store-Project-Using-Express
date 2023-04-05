@@ -31,6 +31,9 @@ var wishListSchema = new _mongoose.Schema({
     },
     price: {
       type: Number
+    },
+    discountPrice: {
+      type: Number
     }
   }],
   cart_total: {
@@ -40,6 +43,8 @@ var wishListSchema = new _mongoose.Schema({
     type: Boolean,
     "default": false
   }
+}, {
+  timestamps: true
 });
 var _default = (0, _mongoose.model)('WishList', wishListSchema);
 exports["default"] = _default;

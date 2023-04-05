@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _mongoose = require("mongoose");
-var userSchema = new _mongoose.Schema({
+var orderSchema = new _mongoose.Schema({
   firstName: {
     type: String
   },
@@ -23,5 +23,5 @@ var userSchema = new _mongoose.Schema({
 }, {
   timestamps: true
 });
-var _default = (0, _mongoose.model)('User', userSchema);
+var _default = (0, _mongoose.model)('User', orderSchema);
 exports["default"] = _default;
