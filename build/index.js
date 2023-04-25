@@ -38,6 +38,7 @@ app.use(_error.genericErrorHandler);
 app.use(_error.notFound);
 app.listen(port, function () {
   _logger["default"].info("Server started at ".concat(host, ":").concat(port, "/api/").concat(api_version, "/"));
+  _logger["default"].info("Start");
 });
 var _default = app;
 exports["default"] = _default;

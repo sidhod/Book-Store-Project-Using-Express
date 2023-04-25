@@ -10,6 +10,7 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 var _user = _interopRequireDefault(require("../models/user.model"));
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
+var _logger = _interopRequireDefault(require("../config/logger"));
 //get all users
 var getAllUsers = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
@@ -73,25 +74,24 @@ var loginUser = /*#__PURE__*/function () {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            _logger["default"].info("login:".concat(body.email));
             email = body.email;
-            _context3.next = 3;
+            _context3.next = 4;
             return _user["default"].find({
               email: email
             });
-          case 3:
+          case 4:
             data = _context3.sent;
-            console.log(data.password);
-            console.log(data);
             if (!(data.length !== 0)) {
-              _context3.next = 18;
+              _context3.next = 17;
               break;
             }
-            _context3.next = 9;
+            _context3.next = 8;
             return _bcrypt["default"].compare(body.password, data[0].password);
-          case 9:
+          case 8:
             passwordvalidator = _context3.sent;
             if (!passwordvalidator) {
-              _context3.next = 15;
+              _context3.next = 14;
               break;
             }
             token = _jsonwebtoken["default"].sign({
@@ -100,14 +100,14 @@ var loginUser = /*#__PURE__*/function () {
               id: data[0]._id
             }, process.env.SECRET_KEY);
             return _context3.abrupt("return", token);
-          case 15:
+          case 14:
             throw new Error('Password Is incorrect.....');
-          case 16:
-            _context3.next = 19;
+          case 15:
+            _context3.next = 18;
             break;
-          case 18:
+          case 17:
             throw new Error('Email Is incorrect.....');
-          case 19:
+          case 18:
           case "end":
             return _context3.stop();
         }

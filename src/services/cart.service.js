@@ -1,6 +1,7 @@
 import Cart from '../models/cart.model';
 import Book from '../models/books.model'
 import object from '@hapi/joi/lib/types/object';
+import logger from '../config/logger';
 //get all books
 export const getAllBooks = async () => {
     const data = await Cart.find();
@@ -12,7 +13,7 @@ export const getBookById = async (body, _id) => {
     const findCart = await Cart.findOne({ userId: body.userId });
     var arr
     if (findCart != null) {
-        console.log("find===>" + findCart + _id)
+        logger.info("find===>" + findCart + _id)
         findCart.books.forEach(object => {
             if (object.productId == _id) {
                 arr = findCart.books.slice(findCart.books.indexOf(object), 1);
@@ -38,14 +39,12 @@ export const addToCart = async (body, _id) => {
     };
     if (findBook != null) {
         const findCart = await Cart.findOne({ userId: body.userId });
-        console.log(findCart);
         if (findCart == null) {
             const createNewCart = await Cart.create({ userId: body.userId, books: [updateBookDetails] });
             return createNewCart
         } else {
             findCart.books.forEach(object => {
-                console.log("pass====>" + _id)
-                console.log('product id==>' + object.productId)
+                logger.info('product id==>' + object.productId)
                 if (object.productId == _id) {
 
                     object.quantity += 1;
@@ -62,7 +61,6 @@ export const addToCart = async (body, _id) => {
                         new: true
                     }
                 );
-                console.log(addToCart.books.length - 1);
                 return addToCart.books[addToCart.books.length - 1]
             }
             else {
@@ -75,7 +73,6 @@ export const addToCart = async (body, _id) => {
                         new: true
                     }
                 );
-                console.log(addBookInCart.books.length - 1);
                 return addBookInCart.books;
 
             }
@@ -87,13 +84,10 @@ export const addToCart = async (body, _id) => {
 
 //remove book from cart
 export const removeBookFromCart = async (body, _id) => {
-    // console.log("id===>" + body)
-    // const findBook = await Book.findOne({ _id: _id });
     let bookMatchFound = false;
-    // if (findBook != null) {
     const findCart = await Cart.findOne({ userId: body.userId });
     if (findCart != null) {
-        console.log("find===>" + findCart + _id)
+        logger.info("find===>" + findCart + _id)
         findCart.books.forEach(object => {
             if (object.productId == _id) {
                 findCart.books.splice(findCart.books.indexOf(object), 1);
@@ -165,9 +159,8 @@ export const decreaseBook = async (body, _id) => {
 
     let bookMatchFound = false;
     const findCart = await Cart.findOne({ userId: body.userId });
-    console.log(findCart)
+    logger.info("Find cart==>", findCart)
     if (findCart != null) {
-        console.log(_id)
         findCart.books.forEach(object => {
 
             if (object.productId == _id) {

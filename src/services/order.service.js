@@ -1,13 +1,12 @@
 import Order from '../models/order.model';
 import Cart from '../models/cart.model';
 import Book from '../models/books.model'
+let name
 export const getAllBooksInOrder = async () => {
     const data = await Order.find();
     return data;
 };
 export const addToOrder = async (body, _id) => {
-    // const d = new Date();
-    // let name = month[d.getMonth()] + " " + d.getDate();
     const findBook = await Book.findOne({ _id: _id });
     let bookMatchFound = false;
     let updateBookDetails = {
@@ -19,18 +18,14 @@ export const addToOrder = async (body, _id) => {
         price: findBook.price,
         discountPrice: findBook.discountPrice,
         quantity: findBook.quantity,
-        // date: `${name}`
     };
     if (findBook != null) {
         const findCart = await Order.findOne({ userId: body.userId });
-        console.log(findCart);
         if (findCart == null) {
             const createNewCart = await Order.create({ userId: body.userId, books: [updateBookDetails] });
             return createNewCart
         } else {
             findCart.books.forEach(object => {
-                console.log("pass====>" + _id)
-                console.log('product id==>' + object.productId)
                 if (object.productId == _id) {
                     bookMatchFound = true;
                 }
@@ -45,7 +40,6 @@ export const addToOrder = async (body, _id) => {
                         new: true
                     }
                 );
-                console.log(addToCart.books.length - 1);
                 return addToCart
             }
             else {
@@ -58,7 +52,6 @@ export const addToOrder = async (body, _id) => {
                         new: true
                     }
                 );
-                console.log(addBookInCart.books.length - 1);
                 return addBookInCart;
 
             }

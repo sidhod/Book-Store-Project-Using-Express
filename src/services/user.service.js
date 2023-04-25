@@ -1,6 +1,7 @@
 import User from '../models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import logger from '../config/logger';
 
 //get all users
 export const getAllUsers = async () => {
@@ -19,10 +20,9 @@ export const newUserRegistration = async (body) => {
 
 //login user
 export const loginUser = async (body) => {
+  logger.info(`login:${body.email}`);
   let email = body.email;
   let data = await User.find({ email: email });
-  console.log(data.password);
-  console.log(data);
   if (data.length !== 0) {
     let passwordvalidator = await bcrypt.compare(body.password, data[0].password);
     if (passwordvalidator) {

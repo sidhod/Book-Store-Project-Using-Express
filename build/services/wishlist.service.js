@@ -88,8 +88,6 @@ var addTowishList = /*#__PURE__*/function () {
             return _context2.abrupt("return", createNewCart);
           case 18:
             findInWishList.books.forEach(function (object) {
-              console.log("pass====>" + _id);
-              console.log('product id==>' + object.productId);
               if (object.productId == _id) {
                 throw new Error("Book Is Present In Wish List");
               }

@@ -26,7 +26,7 @@ const logger = winston.createLogger({
       filename: '%DATE%.log'
     }),
     new winston.transports.Console({
-      level: 'debug',
+      level: 'info',
       json: false,
       handleExceptions: true
     })

@@ -22,15 +22,12 @@ export const addTowishList = async (body, _id) => {
     if (findBook != null) {
         if (findBook.quantity >= 1) {
             const findInWishList = await WishList.findOne({ userId: body.userId });
-            console.log(findInWishList);
             if (findInWishList == null) {
                 const createNewCart = await WishList.create({ userId: body.userId, books: [updateBookDetails] });
                 return createNewCart;
 
             } else {
                 findInWishList.books.forEach(object => {
-                    console.log("pass====>" + _id)
-                    console.log('product id==>' + object.productId)
                     if (object.productId == _id) {
                         throw new Error("Book Is Present In Wish List")
                     }

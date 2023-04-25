@@ -15,7 +15,6 @@ export const newUserValidator = (req, res, next) => {
     });
   } else {
     req.validatedBody = value;
-    console.log(value);
     next();
   }
 };

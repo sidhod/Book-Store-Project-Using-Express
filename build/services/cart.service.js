@@ -10,6 +10,7 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 var _cart = _interopRequireDefault(require("../models/cart.model"));
 var _books = _interopRequireDefault(require("../models/books.model"));
 var _object = _interopRequireDefault(require("@hapi/joi/lib/types/object"));
+var _logger = _interopRequireDefault(require("../config/logger"));
 //get all books
 var getAllBooks = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
@@ -52,7 +53,7 @@ var getBookById = /*#__PURE__*/function () {
               _context2.next = 9;
               break;
             }
-            console.log("find===>" + findCart + _id);
+            _logger["default"].info("find===>" + findCart + _id);
             findCart.books.forEach(function (object) {
               if (object.productId == _id) {
                 arr = findCart.books.slice(findCart.books.indexOf(object), 1);
@@ -97,7 +98,7 @@ var addToCart = /*#__PURE__*/function () {
               discountPrice: findBook.discountPrice
             };
             if (!(findBook != null)) {
-              _context3.next = 33;
+              _context3.next = 30;
               break;
             }
             _context3.next = 8;
@@ -106,33 +107,31 @@ var addToCart = /*#__PURE__*/function () {
             });
           case 8:
             findCart = _context3.sent;
-            console.log(findCart);
             if (!(findCart == null)) {
-              _context3.next = 17;
+              _context3.next = 16;
               break;
             }
-            _context3.next = 13;
+            _context3.next = 12;
             return _cart["default"].create({
               userId: body.userId,
               books: [updateBookDetails]
             });
-          case 13:
+          case 12:
             createNewCart = _context3.sent;
             return _context3.abrupt("return", createNewCart);
-          case 17:
+          case 16:
             findCart.books.forEach(function (object) {
-              console.log("pass====>" + _id);
-              console.log('product id==>' + object.productId);
+              _logger["default"].info('product id==>' + object.productId);
               if (object.productId == _id) {
                 object.quantity += 1;
                 bookMatchFound = true;
               }
             });
             if (!(bookMatchFound == true)) {
-              _context3.next = 26;
+              _context3.next = 24;
               break;
             }
-            _context3.next = 21;
+            _context3.next = 20;
             return _cart["default"].findOneAndUpdate({
               _id: findCart._id
             }, {
@@ -140,12 +139,11 @@ var addToCart = /*#__PURE__*/function () {
             }, {
               "new": true
             });
-          case 21:
+          case 20:
             _addToCart = _context3.sent;
-            console.log(_addToCart.books.length - 1);
             return _context3.abrupt("return", _addToCart.books[_addToCart.books.length - 1]);
-          case 26:
-            _context3.next = 28;
+          case 24:
+            _context3.next = 26;
             return _cart["default"].findOneAndUpdate({
               _id: findCart._id
             }, {
@@ -155,16 +153,15 @@ var addToCart = /*#__PURE__*/function () {
             }, {
               "new": true
             });
-          case 28:
+          case 26:
             addBookInCart = _context3.sent;
-            console.log(addBookInCart.books.length - 1);
             return _context3.abrupt("return", addBookInCart.books);
-          case 31:
-            _context3.next = 34;
+          case 28:
+            _context3.next = 31;
             break;
-          case 33:
+          case 30:
             throw new Error("slot is negative");
-          case 34:
+          case 31:
           case "end":
             return _context3.stop();
         }
@@ -198,7 +195,7 @@ var removeBookFromCart = /*#__PURE__*/function () {
               _context4.next = 17;
               break;
             }
-            console.log("find===>" + findCart + _id);
+            _logger["default"].info("find===>" + findCart + _id);
             findCart.books.forEach(function (object) {
               if (object.productId == _id) {
                 findCart.books.splice(findCart.books.indexOf(object), 1);
@@ -315,7 +312,7 @@ var decreaseBook = /*#__PURE__*/function () {
             });
           case 3:
             findCart = _context6.sent;
-            console.log(findCart);
+            _logger["default"].info("Find cart==>", findCart);
             if (!(findCart != null)) {
               _context6.next = 18;
               break;

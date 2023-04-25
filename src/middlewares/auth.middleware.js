@@ -18,10 +18,8 @@ export const userAuth = async (req, res, next) => {
         message: 'Authorization token is required'
       };
     bearerToken = bearerToken.split(' ')[1];
-    console.log(bearerToken);
     const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
     req.body.userId = user.email;
-    console.log(req.body.userId)
     next();
   } catch (error) {
     next(error);

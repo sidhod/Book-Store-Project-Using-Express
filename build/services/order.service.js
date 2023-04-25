@@ -57,10 +57,9 @@ var addToOrder = /*#__PURE__*/function () {
               price: findBook.price,
               discountPrice: findBook.discountPrice,
               quantity: findBook.quantity
-              // date: `${name}`
             };
             if (!(findBook != null)) {
-              _context2.next = 33;
+              _context2.next = 31;
               break;
             }
             _context2.next = 8;
@@ -84,14 +83,12 @@ var addToOrder = /*#__PURE__*/function () {
             return _context2.abrupt("return", createNewCart);
           case 17:
             findCart.books.forEach(function (object) {
-              console.log("pass====>" + _id);
-              console.log('product id==>' + object.productId);
               if (object.productId == _id) {
                 bookMatchFound = true;
               }
             });
             if (!(bookMatchFound == true)) {
-              _context2.next = 26;
+              _context2.next = 25;
               break;
             }
             _context2.next = 21;
@@ -104,10 +101,9 @@ var addToOrder = /*#__PURE__*/function () {
             });
           case 21:
             addToCart = _context2.sent;
-            console.log(addToCart.books.length - 1);
             return _context2.abrupt("return", addToCart);
-          case 26:
-            _context2.next = 28;
+          case 25:
+            _context2.next = 27;
             return _order["default"].findOneAndUpdate({
               _id: findCart._id
             }, {
@@ -117,16 +113,15 @@ var addToOrder = /*#__PURE__*/function () {
             }, {
               "new": true
             });
-          case 28:
+          case 27:
             addBookInCart = _context2.sent;
-            console.log(addBookInCart.books.length - 1);
             return _context2.abrupt("return", addBookInCart);
-          case 31:
-            _context2.next = 34;
+          case 29:
+            _context2.next = 32;
             break;
-          case 33:
+          case 31:
             throw new Error("slot is negative");
-          case 34:
+          case 32:
           case "end":
             return _context2.stop();
         }
